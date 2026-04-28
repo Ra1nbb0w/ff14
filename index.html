@@ -48,6 +48,10 @@
               <select id="encounter-template"></select>
             </label>
             <button id="load-template" type="button">加载模板</button>
+            <label class="import-label">
+              导入 XLSX 时间轴
+              <input id="timeline-xlsx-input" type="file" accept=".xlsx,.xls" />
+            </label>
           </div>
         </div>
 
@@ -92,6 +96,7 @@
       </div>
     </template>
 
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

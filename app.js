@@ -29,6 +29,7 @@ const els = {
   palette: document.getElementById("skill-palette"),
   templateSelect: document.getElementById("encounter-template"),
   loadTemplateBtn: document.getElementById("load-template"),
+  timelineXlsxInput: document.getElementById("timeline-xlsx-input"),
   eventForm: document.getElementById("event-form"),
   eventTime: document.getElementById("event-time"),
   eventName: document.getElementById("event-name"),
@@ -95,6 +96,31 @@ function bindEvents() {
     persist();
     renderAll();
     setStatus(`已加载副本模板：${templateName}`);
+  });
+
+  els.timelineXlsxInput.addEventListener("change", async (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const events = await parseXlsxEvents(file);
+      if (events.length === 0) {
+        setStatus("XLSX 中没有可用数据，请检查列名或内容。", "warn");
+        return;
+      }
+
+      state.encounterEvents = events.map((item) => ({ ...item, id: crypto.randomUUID() }));
+      state.actions = state.actions.filter((action) =>
+        state.encounterEvents.some((e) => Math.abs(e.time - action.time) < 1e-8)
+      );
+      persist();
+      renderAll();
+      setStatus(`已导入 ${events.length} 条副本时间轴。`);
+    } catch {
+      setStatus("XLSX 导入失败，请确认格式（time/name 两列）。", "warn");
+    } finally {
+      els.timelineXlsxInput.value = "";
+    }
   });
 
   els.eventForm.addEventListener("submit", (event) => {
@@ -673,4 +699,45 @@ async function readFileAsDataUrl(file) {
     reader.onerror = () => reject(new Error("icon-read-failed"));
     reader.readAsDataURL(file);
   });
+}
+
+async function parseXlsxEvents(file) {
+  if (typeof XLSX === "undefined") {
+    throw new Error("xlsx-lib-missing");
+  }
+
+  const buffer = await file.arrayBuffer();
+  const workbook = XLSX.read(buffer, { type: "array" });
+  const firstSheetName = workbook.SheetNames[0];
+  if (!firstSheetName) return [];
+
+  const sheet = workbook.Sheets[firstSheetName];
+  const rows = XLSX.utils.sheet_to_json(sheet, { defval: "" });
+
+  return rows
+    .map((row) => normalizeXlsxRow(row))
+    .filter((row) => row !== null)
+    .sort((a, b) => a.time - b.time);
+}
+
+function normalizeXlsxRow(row) {
+  const keys = Object.keys(row);
+  const getByCandidates = (candidates) => {
+    for (const key of keys) {
+      const lowered = key.trim().toLowerCase();
+      if (candidates.includes(lowered)) {
+        return row[key];
+      }
+    }
+    return "";
+  };
+
+  const rawTime = getByCandidates(["time", "时间", "sec", "seconds"]);
+  const rawName = getByCandidates(["name", "机制", "event", "标题"]);
+
+  const time = Number(rawTime);
+  const name = String(rawName).trim();
+  if (Number.isNaN(time) || time < 0 || !name) return null;
+
+  return { time, name };
 }
