@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>职业后台</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="card">
+        <h1>职业后台（管理员）</h1>
+        <p><a href="index.html">返回排轴界面</a></p>
+      </header>
+
+      <section id="auth-card" class="card">
+        <h2>管理员验证</h2>
+        <form id="auth-form" class="inline-form">
+          <input id="admin-pass" type="password" required placeholder="输入后台密码" />
+          <button type="submit">进入后台</button>
+        </form>
+      </section>
+
+      <section id="admin-content" class="card hidden">
+        <form id="job-form" class="inline-form">
+          <input id="new-job-name" required placeholder="新增职业名" />
+          <button type="submit">新增职业</button>
+        </form>
+
+        <div class="row-between">
+          <label>编辑职业 <select id="admin-job-select"></select></label>
+          <button id="delete-job" type="button" class="danger">删除职业</button>
+        </div>
+
+        <form id="skill-form" class="inline-form">
+          <input id="skill-name" required placeholder="技能名" />
+          <select id="skill-type">
+            <option value="gcd">GCD</option>
+            <option value="ogcd">能力技</option>
+          </select>
+          <input id="skill-gcd" type="number" step="0.01" min="0.5" placeholder="GCD" />
+          <input id="skill-cast" type="number" step="0.01" min="0" value="0" placeholder="咏唱" />
+          <input id="skill-icon" type="file" accept="image/*" />
+          <button type="submit">新增技能</button>
+        </form>
+
+        <ul id="skills-list" class="list"></ul>
+      </section>
+    </main>
+
+    <script src="storage.js"></script>
+    <script src="jobs-admin.js"></script>
+  </body>
+</html>
