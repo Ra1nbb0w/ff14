@@ -11,6 +11,17 @@
 - 本地持久化：`ff14_planner_data.json`。
 
 ## 运行
+```bash
+python3 app.py
+```
+
+
+## 一键打包
+- Windows：双击 `build.bat`
+- macOS/Linux：执行 `./build.sh`
+- 打包产物：`dist/ff14-planner.exe`（Windows）
+
+## 运行
 # FF14 排轴工具
 
 ## 页面说明
