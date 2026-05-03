@@ -12,3 +12,5 @@ input,select,button{font:inherit;padding:7px 10px;border-radius:8px;border:1px s
 .time-col{position:absolute;top:0;width:150px}.time-label{font-size:12px;color:#a9b7ef;margin-bottom:8px}.lane{min-height:58px;border:1px dashed var(--line);border-radius:8px;padding:4px;display:flex;gap:4px;flex-wrap:wrap}.lane.gcd{margin-bottom:8px}.lane.active{border-color:var(--accent)}
 .list{list-style:none;padding:0;margin:8px 0;display:grid;gap:8px}.list li{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);border-radius:8px;padding:8px}
 .status.warn{color:#ffc46d}.status.ok{color:#6ce39c}.tip{color:#b7c4fa}
+
+.hidden{display:none;}

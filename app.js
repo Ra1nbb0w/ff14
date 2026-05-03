@@ -1,3 +1,6 @@
+// Compatibility entry kept for branches that still reference app.js.
+// The planner logic now lives in planner.js + storage.js.
+console.warn('[deprecated] app.js is kept for compatibility. Use planner.js instead.');
 const STORAGE_KEY = "ff14_planner_v3";
 const DEFAULT_ICON = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc2NCcgaGVpZ2h0PSc2NCc+PHJlY3Qgd2lkdGg9JzY0JyBoZWlnaHQ9JzY0JyByeD0nMTInIGZpbGw9JyM0ZjQ2ZTUnLz48dGV4dCB4PSc1MCUnIHk9JzU2JScgZm9udC1zaXplPScyNicgZmlsbD0nd2hpdGUnIHRleHQtYW5jaG9yPSdtaWRkbGUnPuKaoDwvdGV4dD48L3N2Zz4=";
 
