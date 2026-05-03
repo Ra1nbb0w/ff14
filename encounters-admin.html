@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>副本后台</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="card">
+        <h1>副本后台（管理员）</h1>
+        <p><a href="index.html">返回排轴界面</a></p>
+      </header>
+
+      <section id="auth-card" class="card">
+        <h2>管理员验证</h2>
+        <form id="auth-form" class="inline-form">
+          <input id="admin-pass" type="password" required placeholder="输入后台密码" />
+          <button type="submit">进入后台</button>
+        </form>
+      </section>
+
+      <section id="admin-content" class="card hidden">
+        <form id="encounter-form" class="inline-form">
+          <input id="encounter-name" required placeholder="新增副本名" />
+          <button type="submit">新增副本</button>
+        </form>
+
+        <div class="row-between">
+          <label>编辑副本 <select id="encounter-select"></select></label>
+          <button id="delete-encounter" type="button" class="danger">删除副本</button>
+        </div>
+
+        <form id="timeline-file-form" class="inline-form">
+          <input id="timeline-file" type="file" accept="application/json" required />
+          <button type="submit">上传时间轴 JSON</button>
+        </form>
+
+        <form id="event-form" class="inline-form">
+          <input id="event-time" type="number" min="0" step="0.1" required placeholder="时间秒" />
+          <input id="event-name" required placeholder="机制名" />
+          <button type="submit">新增机制点</button>
+        </form>
+
+        <ul id="encounter-events" class="list"></ul>
+      </section>
+    </main>
+
+    <script src="storage.js"></script>
+    <script src="encounters-admin.js"></script>
+  </body>
+</html>
